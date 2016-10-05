@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\PromoBox;
 use App\Orders;
 use App\OrderLines;
-/*use App\Jobs\OrderShipped;*/
+use App\Mail\OrderShipped;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Support\Facades\Mail;
@@ -102,7 +102,7 @@ class HomeController extends Controller
 			//dd([$pb, $pb2]);
 			
 			//not sure how to queue mail - can use it normally
-			//Mail::to($request->email)->queue(new OrderShipped($order));
+			Mail::to($request->email)->queue(new OrderShipped($order,$order_line,$pb->description));
 	
 		}
 		catch (\Illuminate\Database\QueryException $e) {
